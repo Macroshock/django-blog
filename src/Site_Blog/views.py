@@ -2,7 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 def home_page(request):
-  return render(request, 'hello_world.html')
+  home_title = 'Hello there...'
+
+  return render(request, 'home.html', {
+    'home_title': home_title
+    })
 
 
 def about_page(request):
