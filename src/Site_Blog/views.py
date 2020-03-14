@@ -10,8 +10,14 @@ def home_page(request):
 
 
 def about_page(request):
-  return HttpResponse('<h1> About Us </h1>')
+  return render(request, 'about.html', {
+    'title': 'About',
+    'title_header': 'About Us'
+    })
 
 
 def contact_page(request):
-  return HttpResponse('<h1> Contact </h1>')
+  return render(request, 'contact.html', {
+    'title': 'Contact',
+    'title_header': 'Contact Information'
+    })
