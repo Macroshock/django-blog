@@ -10,7 +10,7 @@ def blog_post_detail_page(request, slug):
   except:
     raise Http404('Blog post does not exist.')
 
-  t_name = 'blog_post_detail.html'
+  t_name = 'blog/detail.html'
   context = {'object': obj}
 
   return render(request, t_name, context)
