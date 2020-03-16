@@ -21,7 +21,6 @@ def about_page(request):
 def contact_page(request):
   form = ContactForm(request.POST or None)
   if form.is_valid():
-    print(form.cleaned_data)
     form = ContactForm()
   
   t_name = 'contact.html'

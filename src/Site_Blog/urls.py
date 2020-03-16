@@ -18,7 +18,7 @@ from django.urls import path, re_path, include
 
 # views
 from blog.views import (
-  blog_post_detail_page
+  blog_post_detail_view
 )
 
 from .views import (
