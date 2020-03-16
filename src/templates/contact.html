@@ -5,9 +5,28 @@
 <p>Get in touch with us!</p>
 
 <form method="POST" action=".">
+  {{ form.non_field_errors }}
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit">
+
+  <div class="form-group">
+    {{ form.full_name.errors }}
+    <label for="{{ form.full_name.id_for_label }}">Full Name</label>
+    {{ form.full_name }}
+  </div>
+
+  <div class="form-group">
+    {{ form.email.errors }}
+    <label for="{{ form.email.id_for_label }}">Email</label>
+    {{ form.email }}
+  </div>
+
+  <div class="form-group">
+    {{ form.message.errors }}
+    <label for="{{ form.message.id_for_label }}">Message</label>
+    {{ form.message }}
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 {% endblock %}
