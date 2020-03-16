@@ -20,10 +20,19 @@ def blog_post_create_view(request):
   form = BlogPostForm(request.POST or None)
 
   if form.is_valid():
-    print(form.cleaned_data)
+    # Create the model object
+    post = BlogPost()
+    post.title = form.cleaned_data['title']
+    post.slug = form.cleaned_data['title'].replace(' ', '-')
+    post.content = form.cleaned_data['content']
+    post.save()
+    # Reset the form
     form = BlogPostForm()
   
   t_name = 'blog/create.html'
-  context = {'form': form}
+  context = {
+    'title': 'Create new post',
+    'form': form
+    }
 
   return render(request, t_name, context)
