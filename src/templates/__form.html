@@ -1,0 +1,23 @@
+<form method="POST" action=".">
+  {% csrf_token %}
+  {% if form.non_field.errors %}
+    {% for error in form.non_field.errors %}
+      <div class="alert alert-warning" role="alert">{{ error|escape }}</div>
+    {% endfor %}
+  {% endif %}
+
+  {% for field in form %}
+    <div class="form-group">
+      {% if field.errors %}
+        {% for error in field.errors %}
+          <div class="alert alert-warning" role="alert">{{ error|escape }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+      {{ field }}
+    </div>
+  {% endfor %}
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
