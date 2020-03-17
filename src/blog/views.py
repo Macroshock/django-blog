@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -15,6 +15,18 @@ def blog_post_detail_view(request, slug):
 
   t_name = 'blog/detail.html'
   context = {'object': obj}
+
+  return render(request, t_name, context)
+
+def blog_post_list_view(request):
+  list = BlogPost.objects.filter()
+
+  t_name = 'blog/list.html'
+  context = {
+    'title': 'Blog Posts',
+    'title_header': 'List of Blog Posts',
+    'list': list,
+    }
 
   return render(request, t_name, context)
 
@@ -42,6 +54,7 @@ def blog_post_create_view(request):
 
   return render(request, t_name, context)
 
+@staff_member_required
 def blog_post_update_view(request, slug):
   try:
     obj = BlogPost.objects.get(slug=slug)
@@ -57,6 +70,26 @@ def blog_post_update_view(request, slug):
     'title': 'Update post',
     'title_header': 'Update existing post',
     'form': form,
+    'object': obj
+    }
+
+  return render(request, t_name, context)
+
+@staff_member_required
+def blog_post_delete_view(request, slug):
+  try:
+    obj = BlogPost.objects.get(slug=slug)
+  except:
+    raise Http404('Blog post does not exist.')
+
+  if request.method == 'POST':
+    obj.delete()
+    return redirect('/blog')
+
+  t_name = 'blog/delete.html'
+  context = {
+    'title': 'Delete post',
+    'title_header': 'Delete post',
     'object': obj
     }
 
