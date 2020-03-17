@@ -2,14 +2,25 @@ from django import forms
 
 from .models import BlogPost
 
-class BlogPostForm(forms.Form):
-  title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}))
+class BlogPostForm(forms.ModelForm):
+  #title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}))
   #slug = forms.SlugField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug'}))
-  content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}))
+  #content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}))
+  class Meta:
+    model = BlogPost
+    fields = ['title', 'content']
+    widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}),
+        }
 
   def clean_title(self, *args, **kwargs):
     title = self.cleaned_data.get('title')
+    instance = self.instance
     qs = BlogPost.objects.filter(title__iexact=title)
+
+    if instance is not None:
+      qs = qs.exclude(pk=instance.pk)
 
     if qs.exists():
       raise forms.ValidationError('This title has already been used.')

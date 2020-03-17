@@ -26,7 +26,7 @@ def blog_post_create_view(request):
     # Create the model object
     post = BlogPost()
     post.title = form.cleaned_data['title']
-    post.slug = form.cleaned_data['title'].replace(' ', '-')
+    post.slug = form.cleaned_data['title'].lower().replace(' ', '-')
     post.content = form.cleaned_data['content']
     post.user = request.user
     post.save()
@@ -38,6 +38,26 @@ def blog_post_create_view(request):
     'title': 'Create post',
     'title_header': 'Create new post',
     'form': form
+    }
+
+  return render(request, t_name, context)
+
+def blog_post_update_view(request, slug):
+  try:
+    obj = BlogPost.objects.get(slug=slug)
+  except:
+    raise Http404('Blog post does not exist.')
+
+  form = BlogPostForm(request.POST or None, instance=obj)
+  if form.is_valid():
+    form.save()
+
+  t_name = 'blog/update.html'
+  context = {
+    'title': 'Update post',
+    'title_header': 'Update existing post',
+    'form': form,
+    'object': obj
     }
 
   return render(request, t_name, context)
