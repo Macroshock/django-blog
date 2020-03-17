@@ -35,13 +35,7 @@ def blog_post_create_view(request):
   form = BlogPostForm(request.POST or None)
 
   if form.is_valid():
-    # Create the model object
-    post = BlogPost()
-    post.title = form.cleaned_data['title']
-    post.slug = form.cleaned_data['title'].lower().replace(' ', '-')
-    post.content = form.cleaned_data['content']
-    post.user = request.user
-    post.save()
+    form.save()
     # Reset the form
     form = BlogPostForm()
   
@@ -63,7 +57,10 @@ def blog_post_update_view(request, slug):
 
   form = BlogPostForm(request.POST or None, instance=obj)
   if form.is_valid():
+    form.cleaned_data['slug'] = form.cleaned_data['title'].lower().replace(' ', '-')
+    print(form.cleaned_data)
     form.save()
+    return redirect('/blog')
 
   t_name = 'blog/update.html'
   context = {

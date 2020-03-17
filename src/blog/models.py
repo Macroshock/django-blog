@@ -11,3 +11,7 @@ class BlogPost(models.Model):
   title = models.TextField()
   slug = models.SlugField(unique=True)
   content = models.TextField(null=True, blank=True)
+
+  def save(self, *args, **kwargs):
+    self.slug = self.title.lower().replace(' ', '-')
+    super().save(*args, **kwargs)
