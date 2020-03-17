@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 from .models import BlogPost
@@ -16,6 +18,7 @@ def blog_post_detail_view(request, slug):
 
   return render(request, t_name, context)
 
+@staff_member_required
 def blog_post_create_view(request):
   form = BlogPostForm(request.POST or None)
 
@@ -25,13 +28,15 @@ def blog_post_create_view(request):
     post.title = form.cleaned_data['title']
     post.slug = form.cleaned_data['title'].replace(' ', '-')
     post.content = form.cleaned_data['content']
+    post.user = request.user
     post.save()
     # Reset the form
     form = BlogPostForm()
   
   t_name = 'blog/create.html'
   context = {
-    'title': 'Create new post',
+    'title': 'Create post',
+    'title_header': 'Create new post',
     'form': form
     }
 
