@@ -12,6 +12,10 @@ class BlogPost(models.Model):
   slug = models.SlugField(unique=True)
   content = models.TextField(null=True, blank=True)
 
+  @property
+  def short_content(self):
+    return self.content if len(self.content) < 100 else (self.content[:97] + '...')
+
   def save(self, *args, **kwargs):
     self.slug = self.title.lower().replace(' ', '-')
     super().save(*args, **kwargs)
