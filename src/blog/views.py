@@ -14,7 +14,7 @@ def blog_post_detail_view(request, slug):
     raise Http404('Blog post does not exist.')
 
   t_name = 'blog/detail.html'
-  context = {'object': obj}
+  context = {'object': obj, 'detail': True}
 
   return render(request, t_name, context)
 

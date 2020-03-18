@@ -3,7 +3,7 @@
 {% block content %}
 
   {% for object in list %}
-    {% include "blog/list_inline.html" with blog_post=object %}
+    {% include "blog/list_inline.html" with blog_post=object truncate=True %}
   {% endfor %}
 
 <!--
