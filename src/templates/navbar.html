@@ -1,22 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Django Blog</a>
+  <a class="navbar-brand">Django Blog</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" id="navbar-item-home" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/blog">Blog</a>
+        <a class="nav-link" id="navbar-item-blog" href="/blog">Blog</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/contact">Contact</a>
+        <a class="nav-link" id="navbar-item-contact" href="/contact">Contact</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/about">About</a>
+        <a class="nav-link" id="navbar-item-about" href="/about">About</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -24,4 +24,18 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
+
+  <script defer>
+    // Script to toggle one of the navbar items as active
+    let currentPage = (window.location.href).split('/')
+    let navbarItemId = 'navbar-item-' + (currentPage[3] === '' ? 'home' : currentPage[3])
+    let navbarItem = document.getElementById(navbarItemId)
+      
+    if (navbarItem) {
+      navbarItem.classList.add('active')
+    } else {
+      // By default, set Home to active
+      document.getElementById('navbar-item-home').classList.add('active')
+    }
+  </script>
 </nav>
