@@ -2,6 +2,7 @@
   <div class="card-body">
     <h5 class="card-title">{{ blog_post.title }}</h5>
     <div class="dropdown-divider"></div>
+
     {% if truncate %}
       <p class="card-text">{{ blog_post.content | linebreaks | truncatewords:50 }}</p>
     {% else %}
@@ -18,12 +19,11 @@
       <div class="text-right col-8">
         {% if request.user.is_authenticated %}
           {% if request.user.is_staff %}
-          <b><a href="{{ object.get_edit_url }}" class="text-success">Edit</a></b>
-          <b><a href="{{ object.get_delete_url }}" class="text-danger">Delete</a></b>
+            <b><a href="{{ object.get_edit_url }}" class="text-success">Edit</a></b>
+            <b><a href="{{ object.get_delete_url }}" class="text-danger">Delete</a></b>
           {% endif %}
         {% endif %}
       </div>
-      
     </div>
     
   </div>
