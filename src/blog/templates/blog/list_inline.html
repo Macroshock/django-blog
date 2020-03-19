@@ -1,6 +1,17 @@
 <div class="card mb-3">
   <div class="card-body">
-    <h5 class="card-title">{{ blog_post.title }}</h5>
+    <div class="row">
+      <div class="col-9">
+        <h5 class="card-title">{{ blog_post.title }}</h5>
+      </div>
+      <div class="col-3">
+        <!--  Date of creation is only showed if the user is authenticated. -->
+        {% if request.user.is_authenticated %}
+          <small>{{ blog_post.timestamp }}</small>
+        {% endif %}
+      </div>
+    </div>
+    
     <div class="dropdown-divider"></div>
 
     {% if truncate %}
@@ -9,6 +20,7 @@
       <p class="card-text">{{ blog_post.content | linebreaks }}</p>
     {% endif %}
 
+    <small>Publish date: {{ blog_post.publish_date }}</small>
     <div class="row justify-content-end">
       {% if not detail %}
         <div class="text-left col-4">

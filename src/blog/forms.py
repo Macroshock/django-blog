@@ -8,10 +8,11 @@ class BlogPostForm(forms.ModelForm):
   #content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}))
   class Meta:
     model = BlogPost
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'publish_date']
     widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}),
+            'publish_date': forms.DateInput(attrs={'class': 'form-control'}),
         }
 
   def clean_title(self, *args, **kwargs):
