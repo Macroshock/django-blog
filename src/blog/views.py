@@ -19,7 +19,7 @@ def blog_post_detail_view(request, slug):
   return render(request, t_name, context)
 
 def blog_post_list_view(request):
-  list = BlogPost.objects.filter()
+  list = BlogPost.objects.filter().published()
 
   t_name = 'blog/list.html'
   context = {
