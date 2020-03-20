@@ -20,7 +20,7 @@ class BlogPostManager(models.Manager):
 
 
 class BlogPost(models.Model):
-  user = models.ForeignKey(user_model, 
+  user = models.ForeignKey(user_model,
     null=True, default=1, on_delete=models.SET_NULL)
   title = models.TextField()
   slug = models.SlugField(unique=True)
@@ -28,6 +28,8 @@ class BlogPost(models.Model):
   publish_date = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
   timestamp = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+  image = models.ImageField(upload_to='image/', blank=True, null=True)
+
   objects = BlogPostManager()
 
 

@@ -8,11 +8,12 @@ class BlogPostForm(forms.ModelForm):
   #content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}))
   class Meta:
     model = BlogPost
-    fields = ['title', 'content', 'publish_date']
+    fields = ['title', 'content', 'publish_date', 'image']
     widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}),
             'publish_date': forms.DateInput(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control-file'}),
         }
 
   def clean_title(self, *args, **kwargs):

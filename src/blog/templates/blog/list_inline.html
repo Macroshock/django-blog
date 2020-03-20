@@ -1,5 +1,9 @@
 <div class="card mb-3">
   <div class="card-body">
+    {% if blog_post.image %}
+      <img src="{{ blog_post.image.url }}"" class="card-img-top">
+    {% endif %}
+    
     <div class="row">
       <div class="col-9">
         <h5 class="card-title">{{ blog_post.title }}</h5>

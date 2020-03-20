@@ -35,7 +35,7 @@ def blog_post_list_view(request):
 
 @staff_member_required
 def blog_post_create_view(request):
-  form = BlogPostForm(request.POST or None)
+  form = BlogPostForm(request.POST or None, request.FILES or None)
 
   if form.is_valid():
     form.save()
@@ -58,7 +58,7 @@ def blog_post_update_view(request, slug):
   except:
     raise Http404('Blog post does not exist.')
 
-  form = BlogPostForm(request.POST or None, instance=obj)
+  form = BlogPostForm(request.POST or None, request.FILES or None, instance=obj)
   if form.is_valid():
     form.cleaned_data['slug'] = form.cleaned_data['title'].lower().replace(' ', '-')
     print(form.cleaned_data)
