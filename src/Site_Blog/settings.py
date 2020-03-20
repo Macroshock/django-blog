@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Blog's own apps
     'blog',
+    'searches',
 ]
 
 MIDDLEWARE = [

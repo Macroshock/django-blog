@@ -36,6 +36,7 @@ urlpatterns = [
 
     path('blog/', include('blog.urls')),
     path('blog-new/', blog_post_create_view),
+    path('search/', include('searches.urls')),
 ]
 
 if settings.DEBUG:
