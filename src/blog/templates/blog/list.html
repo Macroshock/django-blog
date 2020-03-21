@@ -6,27 +6,4 @@
     {% include "blog/list_inline.html" with blog_post=object truncate=True %}
   {% endfor %}
 
-<!--
-<table class="table">
-  <thead>
-    <th scope="col">Title</th>
-    <th scope="col">User</th>
-    <th scope="col">Content</th>
-  </thead>
-  <tbody>
-    {% for object in list %}
-      <tr>
-        <td scope="row">
-            <a href="{{ object.get_absolute_url }}">
-              {{ object.title }}
-            </a>
-        </td>
-        <td>{{ object.user }}</td>
-        <td>{{ object.content | truncatewords:10 }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
--->
-
 {% endblock %}
