@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import BlogPost
+from .models import BlogPost, BlogPostComment
 
 class BlogPostForm(forms.ModelForm):
   #title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}))
@@ -28,3 +28,18 @@ class BlogPostForm(forms.ModelForm):
       raise forms.ValidationError('This title has already been used.')
 
     return title
+
+class BlogPostCommentForm(forms.ModelForm):
+
+  class Meta:
+    model = BlogPostComment
+    fields = ['user', 'post', 'content']
+    widgets = {
+          'user': forms.NumberInput(attrs={'hidden': True}),
+          'post': forms.NumberInput(attrs={'hidden': True}),
+          'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Comment', 'rows': 5}),
+        }
+  
+  def __init__(self, *args, **kwargs):
+        super(BlogPostCommentForm, self).__init__(*args, **kwargs)
+        self.fields['user'].required = False

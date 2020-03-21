@@ -55,6 +55,9 @@ class BlogPost(models.Model):
   class Meta:
     ordering = ['-publish_date', '-updated', '-timestamp']
     
+  def __str__(self):
+    return str(self.title)
+
   def get_absolute_url(self):
     return f'/blog/{self.slug}'
 
@@ -71,3 +74,13 @@ class BlogPost(models.Model):
   def save(self, *args, **kwargs):
     self.slug = self.title.lower().replace(' ', '-')
     super().save(*args, **kwargs)
+
+class BlogPostComment(models.Model):
+  post = models.ForeignKey(BlogPost, null=True, on_delete=models.SET_NULL, related_name='comments')
+  user = models.ForeignKey(user_model, null=True, on_delete=models.SET_NULL)
+  content = models.CharField(max_length=220, null=False, blank=False)
+  timestamp = models.DateTimeField(auto_now_add=True)
+
+  @property
+  def short_content(self):
+    return self.content if len(self.content) < 100 else (self.content[:97] + '...')

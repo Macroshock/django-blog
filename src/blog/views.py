@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
-from .models import BlogPost
-from .forms  import BlogPostForm
+from .models import BlogPost, BlogPostComment
+from .forms  import BlogPostForm, BlogPostCommentForm
 
 def blog_post_detail_view(request, slug):
   try:
@@ -13,8 +13,25 @@ def blog_post_detail_view(request, slug):
   except:
     raise Http404('Blog post does not exist.')
 
+  form = BlogPostCommentForm(request.POST or None, initial={'post': obj, 'user': request.user or None})
+  
+  if form.is_valid():
+    print(form.cleaned_data)
+    form.save()
+    # Reset the form
+    form = BlogPostCommentForm(initial={'post': obj, 'user': request.user or None})
+  else:
+    print(form.errors.as_data())
+
+  comments = obj.comments.all()
+
   t_name = 'blog/detail.html'
-  context = {'object': obj, 'detail': True}
+  context = {
+    'object': obj,
+    'detail': True,
+    'comments': comments,
+    'commentForm': form
+  }
 
   return render(request, t_name, context)
 
@@ -61,7 +78,7 @@ def blog_post_update_view(request, slug):
   form = BlogPostForm(request.POST or None, request.FILES or None, instance=obj)
   if form.is_valid():
     form.cleaned_data['slug'] = form.cleaned_data['title'].lower().replace(' ', '-')
-    print(form.cleaned_data)
+
     form.save()
     return redirect('/blog')
 

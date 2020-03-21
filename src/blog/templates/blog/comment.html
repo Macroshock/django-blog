@@ -1,0 +1,20 @@
+<div class="card mb-3">
+  <div class="card-body">
+    
+    <div class="row">
+      <div class="col-9">
+        {% if comment.user %}
+          <h5 class="card-title">{{ comment.user }}</h5>
+        {% else %}
+          <h5 class="card-title">Anonymous</h5>
+        {% endif %}
+      </div>
+      <div class="col-3">
+          <small>{{ blog_post.timestamp }}</small>
+      </div>
+    </div>
+    
+    <div class="dropdown-divider"></div>
+    <p class="card-text">{{ comment.content | linebreaks }}</p>
+  </div>
+</div>

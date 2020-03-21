@@ -4,5 +4,67 @@
 
   {% include "blog/list_inline.html" with blog_post=object %}
   
+  <h5>Comments</h5>
+
+  {% for c in comments %}
+    {% include "blog/comment.html" with comment=c %}
+  {% empty %}
+    <p>This post has no comments yet.</p>
+  {% endfor %}
+  
+  <div class="dropdown-divider"></div>
+  <h6>Post a comment:</h6>
+
+  <form method="POST" action="." onsubmit="submitPost()" novalidate>
+    {% csrf_token %}
+    {% if commentForm.non_field.errors %}
+      {% for error in commentForm.non_field.errors %}
+        <div class="alert alert-warning" role="alert">{{ error|escape }}</div>
+      {% endfor %}
+    {% endif %}
+  
+    {% for field in commentForm %}
+      <div class="form-group">
+        {% if field.errors %}
+          {% for error in field.errors %}
+            <div class="alert alert-warning" role="alert">{{ error|escape }}</div>
+          {% endfor %}
+        {% endif %}
+
+        {{ field }}
+      </div>
+    {% endfor %}
+  
+    <button type="submit" class="btn btn-primary mb-3">Submit comment</button>
+  </form>
+
+  <script defer>
+    function submitPost() {
+      event.preventDefault()
+      console.log('submitting post')
+      sendPost()
+    }
+
+    function sendPost() {
+      let xhttp = new XMLHttpRequest()
+      let user = document.getElementById('id_user').value ? null : document.getElementById('id_user').value
+      let post = document.getElementById('id_post').value
+      let content = document.getElementById('id_content').value
+      let param_str = "user=" + user + "&post=" + post + "&content=" + content
+
+      console.log(user)
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          //document.getElementById("demo").innerHTML = this.responseText
+          alert('Post created!')
+        }
+      };
+      
+      xhttp.open('POST', '.', true)
+      xhttp.setRequestHeader('X-CSRFToken', '{{csrf_token}}')
+      xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+      xhttp.send(param_str)
+    }
+  </script>
 {% endblock %}
 
