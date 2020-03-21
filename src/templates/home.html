@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>Welcome to my blog!</p>
+  <h5>Welcome to my blog!</h5>
+  <div class="dropdown-divider"></div>
+  <p>
+    This is a simple blog built using Django and Bootstrap. Admin and Staff members can create, edit, delete and publish posts
+    through the 'Blog' tab. Registered users and anonymous users can also leave comments in each post.
+  </p>
+  <br>
+  <p>
+    There is also a contact form (which doesn't post data anywhere) and a navbar with Search functionality. All blog posts can be
+    viewed in the 'Blog' tab. In this home page, only the latest post is showed with a brief description.
+  </p>
+  <div class="dropdown-divider"></div>
+
+  {% include "blog/list_inline.html" with blog_post=object truncate=True %}
 {% endblock %}

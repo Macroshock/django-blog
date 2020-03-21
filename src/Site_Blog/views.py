@@ -2,12 +2,16 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from .forms import ContactForm
+from blog.models import BlogPost
 
 def home_page(request):
 
+  obj = BlogPost.objects.filter().order_by('timestamp')[0]
+
   return render(request, 'home.html', {
     'title': 'Homepage',
-    'title_header': 'Hello there...'
+    'title_header': 'Hello there...',
+    'object': obj
     })
 
 
